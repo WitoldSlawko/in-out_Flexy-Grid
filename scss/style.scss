@@ -1,0 +1,236 @@
+$max: 8;
+$procent: 100%;
+
+* {
+  /*border: 1px solid black;*/
+  box-sizing: border-box;
+}
+
+.grid-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.row:before, .row:afeter {
+  content: " ";
+  display: table;
+  clear: both;
+}
+
+.row {
+    min-height: 1px;
+		//display: flex; 
+}
+
+[class*='col-']{
+  float: left;
+  min-height: 1px;
+  $size: $procent*(1/$max);
+  width: $size;
+  padding: 12px;
+  border: 1px dotted black;
+}
+
+@for $i from 1 through $max {
+  $size: $procent*($i/$max);
+  .col-#{$i} {
+    width: $size;
+  }
+}
+
+@media only screen and (max-width: 550px) {
+  [class*='col-'] {
+    float: none;
+    width: 100%;
+  }
+}
+
+/*
+
+	display: flex;
+	flex-direction: ;
+	flex-wrap: ;
+	justify-content: ;
+	align-items: ;
+	align-content: ;
+
+1) display: (F)lex;
+2) flex-direction: (R)ow, (C)olumn, row-r(E)verse, column-re(V)erse;
+3) flex-wrap: (N)o-wrap, (W)rap, wra(P)-reverse;
+4) justify-content: (C)enter, flex-(S)tart, flex-(E)nd, space-(A)round, space-(B)etween;
+5) align-items: (C)enter, flex-(S)tart, flex-(E)nd, base(L)ine, s(T)retch;
+6) align-content: (C)enter, flex-(S)tart, flex-(E)nd, space-(A)round, space-(B)etween, s(T)retch;
+
+@if () {
+
+}
+@else if () {
+
+}
+
+*/
+
+$flex-direction: row, column, row-reverse, column-reverse;
+$flex-wrap: nowrap, wrap, wrap-reverse;
+$justify-content: center, flex-start, flex-end, space-around, space-between;
+$align-items: center, flex-start, flex-end, baseline, stretch;
+$align-content: center, flex-start, flex-end, space-around, space-between, stretch;
+
+$d: '';
+$w: '';
+$j: '';
+$i: '';
+$c: '';
+
+@each $dir in $flex-direction {
+	@each $wrap in $flex-wrap {
+		@each $justify in $justify-content {
+			@each $items in $align-items {
+				@each $content in $align-content {
+					//
+					@if ($dir == row) {
+						$d : 'r';
+					}
+					@else if ($dir == column) {
+						$d : 'c';
+					}
+					@else if ($dir == row-reverse) {
+						$d : 'e';
+					}
+					@else if ($dir == column-reverse) {
+						$d : 'v';
+					}
+					//
+					@if ($wrap == nowrap) {
+						$w : 'n';
+					}
+					@else if ($wrap == wrap ) {
+						$w : 'w';
+					}
+					@else if ($wrap == wrap-reverse) {
+						$w : 'p';
+					}
+					//
+					@if ($justify == center) {
+						$j : 'c';
+					}
+					@else if ($justify == flex-start) {
+						$j : 's';
+					}
+					@else if ($justify == flex-end) {
+						$j : 'e';
+					}
+					@else if ($justify == space-around) {
+						$j : 'a';
+					}
+					@else if ($justify == space-between) {
+						$j : 'b';
+					}
+					//
+					@if ($items == center) {
+						$i : 'c';
+					}
+					@else if ($items == flex-start) {
+						$i : 's';
+					}
+					@else if ($items == flex-end) {
+						$i : 'e';
+					}
+					@else if ($items == baseline) {
+						$i : 'l';
+					}
+					@else if ($items == stretch) {
+						$i : 't';
+					}
+					//
+					@if ($content == center) {
+						$c : 'c';
+					}
+					@else if ($content == flex-start) {
+						$c : 's';
+					}
+					@else if ($content == flex-end) {
+						$c : 'e';
+					}
+					@else if ($content == space-around) {
+						$c : 'a';
+					}
+					@else if ($content == space-between) {
+						$c : 'b';
+					}
+					@else if ($content == stretch) {
+						$c : 't';
+					}
+					
+					.f#{$d}#{$w}#{$j}#{$i}#{$c} {
+						display: flex;
+						flex-direction: $dir;
+						flex-wrap: $wrap;
+						justify-content: $justify;
+						align-items: $items;
+						align-content: $content;
+					}
+				
+				}
+			}
+		}
+	}
+}
+
+/*
+.frnsss {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: flex-start;
+	align-items: stretch;
+	align-content: stretch;
+}
+*/
+
+@for $i from 0 through 10 {
+	
+	.fs#{$i} {
+		flex-shrink: $i;
+	}
+	.fg#{$i} {
+		flex-grow: $i;
+	}
+	
+}
+
+/*
+	align-self: a(U)to, flex-(S)tart, flex-(E)nd, base(L)ine, (C)enter, s(T)retch;
+*/
+
+$align-self: auto, flex-start, flex-end, baseline, center, stretch;
+	
+$as : '';
+
+@each $self in $align-self {
+	
+	@if ($self == auto) {
+		$as : 'u';
+	}
+	@else if ($self == flex-start){
+		$as : 's';
+	}
+	@else if ($self == flex-end){
+		$as : 'e';
+	}
+	@else if ($self == baseline){
+		$as : 'l';
+	}
+	@else if ($self == center){
+		$as : 'c';
+	}
+	@else if ($self == stretch){
+		$as : 't';
+	}
+	
+	.as-#{$as} {
+		align-self: $self;
+	}
+	
+}
